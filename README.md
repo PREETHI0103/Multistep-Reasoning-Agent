@@ -62,39 +62,3 @@ Prompts can be moved to separate .txt files if preferred.
 ### Verifier
 1.Validates the solution before presenting it to the user.
 Python outputs are deterministic and auto-verified; LLM outputs are checked with another call.
-
-## Example Run Logs:
-
-1. Question: 2+3
-{
-  "answer": "5",
-  "status": "success",
-  "reasoning_visible_to_user": "The arithmetic expression was evaluated directly.",
-  "metadata": {
-    "plan": "Here is the execution plan:\n\n1.  Identify the first operand as 2.\n2.  Identify the second operand as 3.\n3.  Add the two identified operands.",
-    "checks": [
-      {
-        "passed": true,
-        "details": "Deterministic execution verified."
-      }
-    ],
-    "retries": 0
-  }
-}
-2. Question: If a train leaves at 14:30 and arrives at 18:05, how long is the journey?
-{
-  "answer": "215 minutes",
-  "status": "success",
-  "reasoning_visible_to_user": "The time difference was calculated from departure and arrival times.",
-  "metadata": {
-    "plan": "Here's a plan to determine the journey duration:\n\n**Execution Plan:**\n\n1.  Identify the departure time.\n2.  Identify the arrival time.\n3.  Calculate the time elapsed in minutes from the departure time to the next full hour.\n4.  Calculate the time elapsed in minutes from the arrival time from the previous full hour.\n5.  Calculate the number of full hours between the departure and arrival times.\n6.  Sum the minutes from step 3 and step 4, and convert any excess minutes into hours to add to the full hours from step 5.\n7.  State the total journey duration in hours and minutes.\n\n**Quantities and Constraints:**\n\n*   **Departure Time:** 14:30\n*   **Arrival Time:** 18:05\n*   **Constraint:** The journey occurs within the same 24-hour period (arrival time is later than departure time on the same day).",
-    "checks": [
-      {
-        "passed": true,
-        "details": "Deterministic execution verified."
-      }
-    ],
-    "retries": 0
-  }
-}
-
