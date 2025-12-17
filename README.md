@@ -37,10 +37,64 @@ The output JSON contains:
 
 All prompts are embedded inside the Python script:
 
-PLANNER_PROMPT: generates a step-by-step plan
-
-EXECUTOR_PROMPT: executes the plan (or uses Python for arithmetic/time)
-
-VERIFIER_PROMPT: validates the solution
+1. PLANNER_PROMPT: generates a step-by-step plan
+2. EXECUTOR_PROMPT: executes the plan (or uses Python for arithmetic/time)
+3. VERIFIER_PROMPT: validates the solution
 
 Prompts can be moved to separate .txt files if preferred.
+
+## Assumptions
+
+1. Arithmetic questions are simple expressions evaluated directly using Python.
+2. Time difference questions are in HH:MM format.
+3. LLM is used only for multi-step reasoning questions.
+4. Users only see answer and reasoning_visible_to_user. Internal metadata is mainly for debugging.
+
+## Prompt Documentation
+### Planner
+1. Breaks the question into numbered steps.
+2. Extracts quantities, rules, and constraints without solving.
+
+### Executor
+1. Follows the plan exactly to produce a final answer.
+2. Uses Python for simple questions; LLM for complex reasoning.
+
+### Verifier
+1.Validates the solution before presenting it to the user.
+Python outputs are deterministic and auto-verified; LLM outputs are checked with another call.
+
+## Example Run Logs:
+
+1. Question: 2+3
+{
+  "answer": "5",
+  "status": "success",
+  "reasoning_visible_to_user": "The arithmetic expression was evaluated directly.",
+  "metadata": {
+    "plan": "Here is the execution plan:\n\n1.  Identify the first operand as 2.\n2.  Identify the second operand as 3.\n3.  Add the two identified operands.",
+    "checks": [
+      {
+        "passed": true,
+        "details": "Deterministic execution verified."
+      }
+    ],
+    "retries": 0
+  }
+}
+2. Question: If a train leaves at 14:30 and arrives at 18:05, how long is the journey?
+{
+  "answer": "215 minutes",
+  "status": "success",
+  "reasoning_visible_to_user": "The time difference was calculated from departure and arrival times.",
+  "metadata": {
+    "plan": "Here's a plan to determine the journey duration:\n\n**Execution Plan:**\n\n1.  Identify the departure time.\n2.  Identify the arrival time.\n3.  Calculate the time elapsed in minutes from the departure time to the next full hour.\n4.  Calculate the time elapsed in minutes from the arrival time from the previous full hour.\n5.  Calculate the number of full hours between the departure and arrival times.\n6.  Sum the minutes from step 3 and step 4, and convert any excess minutes into hours to add to the full hours from step 5.\n7.  State the total journey duration in hours and minutes.\n\n**Quantities and Constraints:**\n\n*   **Departure Time:** 14:30\n*   **Arrival Time:** 18:05\n*   **Constraint:** The journey occurs within the same 24-hour period (arrival time is later than departure time on the same day).",
+    "checks": [
+      {
+        "passed": true,
+        "details": "Deterministic execution verified."
+      }
+    ],
+    "retries": 0
+  }
+}
+
