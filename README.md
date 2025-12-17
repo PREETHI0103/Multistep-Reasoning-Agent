@@ -58,5 +58,5 @@ Prompts can be moved to separate .txt files if preferred.
 2. Uses Python for simple questions; LLM for complex reasoning.
 
 ### Verifier
-1.Validates the solution before presenting it to the user.
-Python outputs are deterministic and auto-verified; LLM outputs are checked with another call.
+1. Validates the solution before presenting it to the user.
+2. Python outputs are deterministic and auto-verified; LLM outputs are checked with another call.
