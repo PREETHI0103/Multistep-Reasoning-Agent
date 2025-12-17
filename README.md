@@ -1,26 +1,24 @@
-# Multi-Step Reasoning Agent with Self-Checking
+# 🧠 Multi-Step Reasoning Agent with Self-Checking
 
-## Overview
+## 📖 Overview
 This project implements a **Multi-Step Reasoning Agent** capable of solving structured word problems such as:
 
-- Arithmetic (e.g., `2+3`)  
-- Time differences (e.g., train departure and arrival)  
-- General reasoning (e.g., “Alice has 3 red apples and twice as many green apples as red. How many apples does she have in total?”)  
+- ➕ Arithmetic (e.g., `2+3`)  
+- ⏱ Time differences (e.g., train departure and arrival)  
+- 🧩 General reasoning (e.g., “Alice has 3 red apples and twice as many green apples as red. How many apples does she have in total?”)  
 
 The agent uses a combination of:
 
-1. **Python logic** for deterministic problems (arithmetic, time).  
-2. **Gemini LLM** for general reasoning tasks.  
+1. 🐍 **Python logic** for deterministic problems (arithmetic, time).  
+2. 🤖 **Gemini LLM** for general reasoning tasks.  
 
-It also performs **self-verification** to ensure correctness before returning the final answer.
+It also performs **self-verification** ✅ to ensure correctness before returning the final answer.
 
 The output JSON contains:
 
-- `answer`: the user-facing final answer  
-- `reasoning_visible_to_user`: a short explanation of reasoning  
-- `metadata`: internal logs including plan, verification, and retries (for debugging)
-
----
+- `answer`: 📝 the user-facing final answer  
+- `reasoning_visible_to_user`: 💡 a short explanation of reasoning  
+- `metadata`: 🗂 internal logs including plan, verification, and retries (for debugging)
 
 ## How to Run
 
